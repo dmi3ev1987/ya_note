@@ -14,11 +14,11 @@ from . utils import assert_note_form_data, assert_note_from_database
 User = get_user_model()
 
 
-class TestNoteCreationEmptySlug(TestCase, SetUpTestDataMixin):
+class TestNoteCreationEmptySlug(SetUpTestDataMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        SetUpTestDataMixin.setUpTestData()
+        super().setUpTestData()
         cls.user = User.objects.create(username='Мимо Крокодил')
         cls.auth_client = Client()
         cls.auth_client.force_login(cls.user)
@@ -60,14 +60,11 @@ class TestNoteCreationEmptySlug(TestCase, SetUpTestDataMixin):
         self.assertEqual(new_note.slug, expected_slug)
 
 
-class TestNoteSlugEditDelete(TestCase, SetUpTestDataMixin):
+class TestNoteSlugEditDelete(SetUpTestDataMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        SetUpTestDataMixin.setUpTestData()
-        cls.reader = User.objects.create(username='Не автор')
-        cls.reader_client = Client()
-        cls.reader_client.force_login(cls.reader)
+        super().setUpTestData()
         cls.note = Note.objects.create(
             title=cls.TITLE,
             text=cls.TEXT,

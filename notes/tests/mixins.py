@@ -17,3 +17,6 @@ class SetUpTestDataMixin:
         cls.author = User.objects.create(username='Автор')
         cls.author_client = Client()
         cls.author_client.force_login(cls.author)
+        cls.reader = User.objects.create(username='Не автор')
+        cls.reader_client = Client()
+        cls.reader_client.force_login(cls.reader)

@@ -4,22 +4,22 @@ from django.contrib.auth import get_user_model
 
 from notes.models import Note
 from notes.forms import NoteForm
+from .mixins import SetUpTestDataMixin
 
 User = get_user_model()
 
 
-class TestHomePage(TestCase):
+class TestHomePage(SetUpTestDataMixin, TestCase):
     HOME_URL = reverse('notes:home')
 
     @classmethod
     def setUpTestData(cls):
-        cls.author = User.objects.create(username='Автор')
-        cls.reader = User.objects.create(username='Не автор')
+        super().setUpTestData()
         cls.note = Note.objects.create(
             title='Заголовок',
             text='Текст заметки',
-            author=cls.author,
             slug='note-slug',
+            author=cls.author,
         )
 
     def test_notes_list_for_different_users(self):

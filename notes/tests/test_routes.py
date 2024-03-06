@@ -5,16 +5,16 @@ from django.test import TestCase
 from django.urls import reverse
 
 from notes.models import Note
+from .mixins import SetUpTestDataMixin
 
 User = get_user_model()
 
 
-class TestRoutes(TestCase):
+class TestRoutes(SetUpTestDataMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.author = User.objects.create(username='Автор')
-        cls.reader = User.objects.create(username='Не автор')
+        super().setUpTestData()
         cls.note = Note.objects.create(
             title='Заголовок',
             text='Текст заметки',
